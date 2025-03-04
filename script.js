@@ -1,62 +1,60 @@
-//your JS code here. If required.
-let input=document.getElementById("ip")
-let start=document.getElementById("btn")
-let output=document.getElementById("output")
+// Select the DOM elements
+const inputElement = document.getElementById('ip');
+const start = document.getElementById('btn');
+const outputElement = document.getElementById('output');
 
-function initial(inp){
-	return setTimeout(()=>{
-		output.innerHTML=""
-		output.innerHTML=`Result: ${inp}`
-		console.log("inp",inp)
-		return inp;
-	},2000)
-}
-function second(inp){
-	setTimeout(()=>{
-		output.innerHTML=""
-		let mul=2*inp
-		output.innerHTML=`Result: ${mul}`
-		console.log("mul",mul)
-		return mul
-	},2000)
-}
-function third(inp){
-	setTimeout(()=>{
-		output.innerHTML=""
-		let sub=inp - 3
-		output.innerHTML=`Result: ${sub}`
-		console.log("sub",sub)
-		return sub
-	},1000)
-}
-function fourth(inp){
-	setTimeout(()=>{
-		output.innerHTML=""
-		let div=inp/2
-		output.innerHTML=`Result: ${div}`
-		console.log("div",div)
-		return div
-	},1000)
-}
-function fifth(inp){
-	setTimeout(()=>{
-		output.innerHTML=""
-		let sum=inp+10
-		output.innerHTML=`Final Result: ${sum}`
-		console.log("sum",sum)
-		return sum
-	},1000)
+function performOperations(inputNumber) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(inputNumber);
+	}, 2000);
+  })
+  .then(result => {
+    outputElement.innerHTML = `Result: ${result}`;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(result * 2); 
+      }, 2000);
+    });
+  })
+  .then(result => {
+    outputElement.innerHTML = `Result: ${result}`;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(result - 3);
+      }, 1000);
+    });
+  })
+  .then(result => {
+    outputElement.innerHTML = `Result: ${result}`;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(result / 2);
+      }, 1000);
+    });
+  })
+  .then(result => {
+    outputElement.innerHTML = `Result: ${result}`;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(result + 10);
+      }, 1000);
+    });
+  })
+  .then(finalResult => {
+    outputElement.innerHTML = `Final Result: ${finalResult}`;
+  });
 }
 
-start.addEventListener("click", (e)=>{
-	e.preventDefault();
-	const userInput=input.value;
-	new Promise(resolve=>{
-		resolve(userInput)
-	})
-	.then(initial(userInput))
-	.then(second(userInput))
-	.then(third(userInput))
-	.then(fourth(userInput))
-	.then(fifth(userInput))
-})
+
+start.addEventListener('click', () => {
+  const inputValue = parseFloat(inputElement.value); 
+	// Get the input value
+  if (!isNaN(inputValue)) {
+    performOperations(inputValue); 
+	  // Perform operations with the input value
+  } 
+  // else {
+    // outputElement.innerHTML = 'Please enter a valid number.';
+  // }
+});
